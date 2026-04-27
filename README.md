@@ -8,7 +8,10 @@ se debe instalar las dependencias necesarias, solo se debe ejecutar
 de entorno en el archiv .env
 
 ## 3- INICIAR PROYECTO
-- Iniciar proyecto desde la terminal con "npm run dev"
+- Iniciar proyecto desde la terminal con "npm run dev" / al iniciar el proyecto
+se mantendra en ejecución todo el tiempo debido a la libreria "nodemon" para
+eliminar la necesidad de ejecutar el proyecto por cada cambio realizado, 
+cada vez que se haga un cambio se aplicara de inmediato en el proyecto ejecutado en tiempo real
 
 ## ACLARACION
 - El proyecto esta desarrollandose bajo la logica de EMS 6 y no common JS
