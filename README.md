@@ -5,7 +5,7 @@ se debe instalar las dependencias necesarias, solo se debe ejecutar
 
 ## 2- VARIBALES DE ENTORNO
 - El servidor solo se iniciara si se tiene llenas las variables
-de entorno en el archiv .env (se debe cmabiar el nombre del archivo ".env.example" a ".env")
+de entorno en el archiv .env (se debe cambiar el nombre del archivo ".env.example" a ".env")
 
 ## 3- INICIAR PROYECTO
 - Iniciar proyecto desde la terminal con "npm run dev" / al iniciar el proyecto
