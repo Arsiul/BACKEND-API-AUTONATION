@@ -8,8 +8,6 @@ export const validateSchema = (schema) => {
         errors: result.error.format(),
       });
     }
-
-    // reemplaza el body con datos ya validados
     req.body = result.data;
 
     next();
