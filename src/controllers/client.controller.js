@@ -23,4 +23,20 @@ export class clientController{
             })
         }
     }
+    static async Register(req,res){
+
+        const data = req.body
+
+        try {
+            const newClient = await clientModel.Create(data)
+            res.status(201).json({
+                message: "Cliente Registrado"
+            })
+
+        } catch (error) {
+            res.status(500).json({
+                error: error.message
+            })
+        }
+    }
 }
