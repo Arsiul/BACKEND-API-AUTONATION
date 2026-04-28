@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-export const userSchema = z.object({
+export const clientSchema = z.object({
   primer_nombre: z.string().min(3, "Debe tener al menos 3 caracteres"),
   segundo_nombre: z.string().min(3, "Debe tener al menos 3 caracteres").optional(),
   primer_apellido: z.string().min(3, "Debe tener al menos 3 caracteres"),
