@@ -1,1 +1,16 @@
-http://localhost:3000/api/client/getAll
+GET http://localhost:3000/api/client/getAll
+
+POST http://localhost:3000/api/client/register
+Content-Type: application/json
+
+{
+  "primer_nombre": "Carlos",
+  "segundo_nombre": "Alberto",
+  "primer_apellido": "Gomez",
+  "segundo_apellido": "Perez",
+  "dni": "12345678",
+  "telefono": "987654321",
+  "correo": "carlos@mail.com",
+  "direccion": "Av. Lima 123",
+  "url_img": "https://example.com/img.jpg"
+}
