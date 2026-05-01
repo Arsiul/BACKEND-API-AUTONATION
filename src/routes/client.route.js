@@ -1,4 +1,4 @@
-import { clientController } from "../controllers/Client.controller.js";
+import { clientController } from "../controllers/client.controller.js";
 import { validateSchema } from "../middlewares/validate.middleware.js";
 import { clientSchema } from "../schemas/auth.schema.js";
 import { Router } from "express";
