@@ -5,7 +5,8 @@ export class UserModel{
     static async findById(id){
 
         const [result] = await pool.query(
-            `SELECT * FROM tb_usuario WHERE id = ?`, [id]
+            `SELECT id,primer_nombre,segundo_nombre,primer_apellido,
+            segundo_apellido,dni,correo,telefono,url_img,id_estado_usuario,id_rol FROM tb_usuario WHERE id = ?`, [id]
         )
         return result[0];
     }
