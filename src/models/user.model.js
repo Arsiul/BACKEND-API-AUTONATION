@@ -30,7 +30,8 @@ export class UserModel{
     }
     static async getAll(){
         const [result] = await pool.query(
-            `SELECT * FROM tb_usuario`
+            `SELECT id,primer_nombre,segundo_nombre,primer_apellido,
+            segundo_apellido,dni,correo,telefono,url_img,id_estado_usuario,id_rol FROM tb_usuario`
         )
         return result;
     }
