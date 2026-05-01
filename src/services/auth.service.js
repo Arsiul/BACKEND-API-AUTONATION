@@ -1,6 +1,6 @@
 import bcrypt from "bcrypt";
 import { UserModel } from "../models/user.model.js";
-import { generateToken } from "../utils/jwt.utils.js"
+import { generateToken } from "../utils/jwt.util.js"
 
 export class AuthService {
 
