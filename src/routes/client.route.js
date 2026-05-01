@@ -3,9 +3,9 @@ import { validateSchema } from "../middlewares/validate.middleware.js";
 import { clientSchema } from "../schemas/auth.schema.js";
 import { Router } from "express";
 
-const routerClient = Router()
+const clientroute = Router()
 
-routerClient.get("/getAll", clientController.getAll)
-routerClient.post("/register", validateSchema(clientSchema),clientController.Register)
+clientroute.get("/getAll", clientController.getAll)
+clientroute.post("/register", validateSchema(clientSchema),clientController.Register)
 
-export default routerClient;
+export default clientroute;
