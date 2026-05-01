@@ -11,10 +11,7 @@ export class clientController{
                 })
             }
             else{
-                res.status(200).json({
-                    message: "Datos",
-                    data
-                })
+                res.status(200).json(data)
             }
         } catch (error) {
             res.status(500).json({
