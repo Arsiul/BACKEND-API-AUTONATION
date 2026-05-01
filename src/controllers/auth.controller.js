@@ -1,5 +1,5 @@
-import { AuthService } from "../services/auth.services.js";
-import { generateToken } from "../utils/jwt.utils.js";
+import { AuthService } from "../services/auth.service.js";
+import { generateToken } from "../utils/jwt.util.js";
 
 export class AuthController {
 
