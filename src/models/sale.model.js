@@ -8,9 +8,14 @@ export class SaleModel{
         )
         return result;
     }
-    static async create(){
-        const newSale = await pool.query(
-            `INSERT INTO tb_venta `
-        )
-    }
+    // static async createSale(conn, { serie, nro_comprobante,subtotal,igv,total,id_estado_pago,id_cliente,id_tipo_comprobante,id_usuario }) {
+    //     const [result] = await conn.query(
+    // `INSERT INTO tb_venta 
+    // (serie, nro_comprobante, fecha_venta, subtotal, igv, total,
+    //  id_estado_pago, id_cliente, id_tipo_comprobante, id_usuario)
+    //  VALUES (?, ?, NOW(), ?, ?, ?, ?, ?, ?, ?)`,
+    // [ serie,nro_comprobante,subtotal,igv,total,id_estado_pago,id_cliente,id_tipo_comprobante,id_usuario ]);
+    //     return result.insertId; 
+    // }
+
 }
