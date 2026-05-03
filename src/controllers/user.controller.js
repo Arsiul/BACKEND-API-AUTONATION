@@ -1,6 +1,6 @@
 import { UserModel } from "../models/user.model.js";
 
-export class UserControiller{
+export class UserController{
 
     static async getAll(req,res){
         try {
