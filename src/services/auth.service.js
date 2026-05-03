@@ -18,20 +18,21 @@ export class AuthService {
     });
   }
 
-static async login({ correo, contrasena }) {
-  const user = await UserModel.findByEmail(correo);
+  static async login({ correo, contrasena }) {
+    const user = await UserModel.findByEmail(correo);
 
-  if (!user) throw new Error("Credenciales inválidas");
+    if (!user) throw new Error("Credenciales inválidas");
 
-  const valid = await bcrypt.compare(contrasena, user.contrasena);
-  if (!valid) throw new Error("Credenciales inválidas");
+    const valid = await bcrypt.compare(contrasena, user.contrasena);
+    if (!valid) throw new Error("Credenciales inválidas");
 
-  const { contrasena: _, ...safeUser } = user;
-  const token = generateToken(user);
+    const { contrasena: _, ...safeUser } = user;
+    const token = generateToken(user);
+    console.log("id_rol: ", user.id_rol)
 
-  return {
-    token,
-    user: safeUser
-  };
-}
+    return {
+      token,
+      user: safeUser
+    };
+  }
 }
