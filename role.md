@@ -1,0 +1,7 @@
+## ROLES
+
+1- ADMIN
+2- EMPLEADO
+3- MECÁNICO
+
+
