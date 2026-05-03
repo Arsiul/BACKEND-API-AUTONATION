@@ -5,7 +5,7 @@ export class clientController{
     static async getAll(req,res){
         try {
             const data = await clientModel.getAll()
-            if(data.length == 0){
+            if(data.length === 0){
                 return res.status(200).json({
                     message: "No hay clientes registrados"
                 })
