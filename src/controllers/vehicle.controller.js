@@ -22,4 +22,16 @@ export class VehicleController {
             res.status(500).json({ message: "Error al registrar vehículo", error: error.message });
         }
     }
+
+    static async update(req, res) {
+        try {
+            const { id } = req.params;
+            const data = req.body;
+
+            await VehicleModel.update(id, data);
+            res.status(200).json({ message: "Vehículo actualizado correctamente" });
+        } catch (error) {
+            res.status(500).json({ message: "Error al actualizar vehículo", error: error.message });
+        }
+    }
 }
