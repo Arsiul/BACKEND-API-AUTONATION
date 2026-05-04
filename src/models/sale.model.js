@@ -8,14 +8,25 @@ export class SaleModel{
         )
         return result;
     }
-    // static async createSale(conn, { serie, nro_comprobante,subtotal,igv,total,id_estado_pago,id_cliente,id_tipo_comprobante,id_usuario }) {
-    //     const [result] = await conn.query(
-    // `INSERT INTO tb_venta 
-    // (serie, nro_comprobante, fecha_venta, subtotal, igv, total,
-    //  id_estado_pago, id_cliente, id_tipo_comprobante, id_usuario)
-    //  VALUES (?, ?, NOW(), ?, ?, ?, ?, ?, ?, ?)`,
-    // [ serie,nro_comprobante,subtotal,igv,total,id_estado_pago,id_cliente,id_tipo_comprobante,id_usuario ]);
-    //     return result.insertId; 
-    // }
+    static async createSale(conn, data) {
+        await conn.query(
+        `INSERT INTO tb_venta 
+        (id, serie, nro_comprobante, fecha_venta, subtotal, igv, total,
+        id_estado_pago, id_cliente, id_tipo_comprobante, id_usuario)
+        VALUES (?, ?, ?, NOW(), ?, ?, ?, ?, ?, ?, ?)`,
+        [
+            data.id,
+            data.serie,
+            data.nro_comprobante,
+            data.subtotal,
+            data.igv,
+            data.total,
+            data.id_estado_pago,
+            data.id_cliente,
+            data.id_tipo_comprobante,
+            data.id_usuario
+        ]
+        );
+    }
 
 }

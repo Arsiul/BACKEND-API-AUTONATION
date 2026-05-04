@@ -1,4 +1,5 @@
 import { SaleModel } from "../models/sale.model.js";
+import { SaleService } from "../services/sale.service.js";
 
 export class SaleController{
     
@@ -18,5 +19,20 @@ export class SaleController{
                 error: error.message
             })
         }
+    }
+    static async create(req, res) {
+    try {
+      const result = await SaleService.createSale(req.body);
+
+      return res.status(201).json({
+        message: "Venta registrada correctamente",
+        ...result
+      });
+
+    } catch (error) {
+      return res.status(400).json({
+        message: error.message
+      });
+    }
     }
 }

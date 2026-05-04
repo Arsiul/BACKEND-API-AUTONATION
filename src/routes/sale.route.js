@@ -6,5 +6,6 @@ import { SaleController } from "../controllers/sale.controller.js";
 const saleRouter = Router();
 
 saleRouter.get("/getAll", authMiddleware, roleMiddleware(1,2,3), SaleController.getAll)
+saleRouter.post("/register", SaleController.create);
 
 export default saleRouter;

@@ -1,82 +1,88 @@
-// import { pool } from "../config/db.js";
-// import { SaleModel } from "../models/sale.model.js";
+import { pool } from "../config/db.js";
+import { SaleModel } from "../models/sale.model.js";
+import { v4 as uuidv4 } from "uuid";
 
-// export class VentaService {
+export class SaleService {
 
-//   static async crearVenta(data) {
-//     const conn = await pool.getConnection();
+  static async createSale(data) {
+    const conn = await pool.getConnection();
 
-//     try {
+    try {
+      await conn.beginTransaction();
 
-//       await conn.beginTransaction();
+      // 🔥 1. Generar UUID
+      const ventaId = uuidv4();
 
-//       const ventaId = await SaleModel.createSale(conn, {
-//         serie: data.serie,
-//         nro_comprobante: data.nro_comprobante,
-//         subtotal: data.subtotal,
-//         igv: data.igv,
-//         total: data.total,
-//         id_estado_pago: data.id_estado_pago,
-//         id_cliente: data.id_cliente,
-//         id_tipo_comprobante: data.id_tipo_comprobante,
-//         id_usuario: data.id_usuario
-//       });
+      // 🔥 2. Crear venta
+      await SaleModel.createSale(conn, {
+        id: ventaId,
+        serie: data.serie,
+        nro_comprobante: data.nro_comprobante,
+        subtotal: data.subtotal,
+        igv: data.igv,
+        total: data.total,
+        id_estado_pago: data.id_estado_pago,
+        id_cliente: data.id_cliente,
+        id_tipo_comprobante: data.id_tipo_comprobante,
+        id_usuario: data.id_usuario
+      });
 
-//       for (const item of data.vehiculos) {
+      // 🔥 3. Insertar detalle + validar stock
+      for (const item of data.vehiculos) {
 
-//         const [rows] = await conn.query(
-//           `SELECT stock FROM tb_vehiculo WHERE id = ?`,
-//           [item.id_vehiculo]
-//         );
+        // Obtener stock
+        const [rows] = await conn.query(
+          `SELECT stock FROM tb_vehiculo WHERE id = ?`,
+          [item.id_vehiculo]
+        );
 
-//         const vehiculo = rows[0];
+        const vehiculo = rows[0];
 
-//         if (!vehiculo) {
-//           throw new Error(`Vehículo ${item.id_vehiculo} no existe`);
-//         }
+        if (!vehiculo) {
+          throw new Error(`Vehículo ${item.id_vehiculo} no existe`);
+        }
 
-//         if (vehiculo.stock < item.cantidad) {
-//           throw new Error(`Stock insuficiente para vehículo ${item.id_vehiculo}`);
-//         }
+        if (vehiculo.stock < item.cantidad) {
+          throw new Error(`Stock insuficiente para vehículo ${item.id_vehiculo}`);
+        }
 
-//         // 🧾 3.2 INSERTAR DETALLE
-//         await conn.query(
-//           `INSERT INTO tb_detalle_venta 
-//           (venta_id, vehiculo_id, cantidad, precio)
-//           VALUES (?, ?, ?, ?)`,
-//           [
-//             ventaId,
-//             item.vehiculoId,
-//             item.cantidad,
-//             item.precio
-//           ]
-//         );
+        // Insertar detalle
+        await conn.query(
+          `INSERT INTO tb_detalle_venta 
+          (cantidad, subtotal, id_venta, id_vehiculo)
+          VALUES (?, ?, ?, ?)`,
+          [
+            item.cantidad,
+            item.subtotal,
+            ventaId
+          , item.id_vehiculo]
+        );
 
-//         // 📉 3.3 DESCONTAR STOCK
-//         await conn.query(
-//           `UPDATE tb_vehiculo
-//            SET stock = stock - ?
-//            WHERE id = ?`,
-//           [item.cantidad, item.vehiculoId]
-//         );
-//       }
+        const [result] = await conn.query(
+          `UPDATE tb_vehiculo
+           SET stock = stock - ?
+           WHERE id = ? AND stock >= ?`,
+          [item.cantidad, item.id_vehiculo, item.cantidad]
+        );
 
-//       // ✅ 4. CONFIRMAR TODO
-//       await conn.commit();
-//       conn.release();
+        if (result.affectedRows === 0) {
+          throw new Error(`Stock insuficiente para vehículo ${item.id_vehiculo}`);
+        }
+      }
 
-//       return {
-//         success: true,
-//         ventaId
-//       };
+      // 🔥 4. Commit
+      await conn.commit();
+      conn.release();
 
-//     } catch (error) {
+      return {
+        success: true,
+        ventaId
+      };
 
-//       // ❌ 5. ROLLBACK SI FALLA ALGO
-//       await conn.rollback();
-//       conn.release();
-
-//       throw error;
-//     }
-//   }
-// }
+    } catch (error) {
+      await conn.rollback();
+      conn.release();
+      throw error;
+    }
+  }
+}
