@@ -9,5 +9,6 @@ const clientroute = Router()
 
 clientroute.get("/getAll",authMiddleware,roleMiddleware(1,2,3), clientController.getAll)
 clientroute.post("/register", authMiddleware,roleMiddleware(1,2,3),validateSchema(clientSchema),clientController.Register)
+clientroute.put("/update/:id", validateSchema(clientSchema), clientController.Update)
 
 export default clientroute;

@@ -36,4 +36,20 @@ export class clientController{
             })
         }
     }
+    static async Update(req,res){
+        const id = req.params.id
+        const data = req.body
+
+        try {
+            const updateClient = await clientModel.Update(data,id)
+            res.status(200).json({
+                message: "Cliente Actualizado"
+            })
+
+        } catch (error) {
+            res.status(500).json({
+                error: error.message
+            })
+        }
+    }
 }

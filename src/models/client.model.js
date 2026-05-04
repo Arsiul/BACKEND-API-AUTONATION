@@ -16,5 +16,15 @@ export class clientModel{
         )
         return newClient;
     }
+
+    static async Update(data,id){
+        const updatedClient = await pool.query(
+            `UPDATE tb_cliente SET primer_nombre = ?, segundo_nombre=?, primer_apellido=?, segundo_apellido=?,
+            dni=?,telefono=?,correo=?,direccion=?,url_img=? WHERE id = ?`,
+            [ data.primer_nombre, data.segundo_nombre ?? null, data.primer_apellido, data.segundo_apellido ?? null,
+            data.dni, data.telefono, data.correo, data.direccion, data.url_img, id ]
+        )
+        return updatedClient;
+    }
     
 }
