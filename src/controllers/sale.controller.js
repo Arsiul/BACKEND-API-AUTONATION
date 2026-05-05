@@ -8,7 +8,7 @@ export class SaleController{
             const data = await SaleModel.getAll()
             if(data.length === 0){
                 res.status(200).json({
-                    message: "No hay clientes registrados"
+                    message: "No hay ventas registrados"
                 })
             }else{
                 return res.status(200).json(data)
