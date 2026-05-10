@@ -43,7 +43,7 @@ export class SaleModel{
                 id_cliente = ?, 
                 id_tipo_comprobante = ?, 
                 id_usuario = ?
-            WHERE id = ?`
+            WHERE id = ?`, 
                 [
                 data.serie,
                 data.nro_comprobante,
