@@ -1,6 +1,10 @@
 import bcrypt from "bcrypt";
 import { UserModel } from "../models/user.model.js";
 import { generateToken } from "../utils/jwt.util.js"
+import { pool } from "../config/db.js";
+import { CodeUtil } from "../utils/generatecode.util.js";
+import { MailService } from "./mail.service.js";
+import { PasswordResetModel } from "../models/password_reset.model.js";
 
 export class AuthService {
 
@@ -34,5 +38,51 @@ export class AuthService {
       token,
       user: safeUser
     };
+  }
+
+  static async requestPasswordReset(email) {
+    const [rows] = await pool.query(
+      "SELECT * FROM tb_usuario WHERE correo = ?",
+      [email]
+    );
+
+    const user = rows[0];
+    if (!user) return;
+
+    const code = CodeUtil.generate();
+    const expires_at = new Date(Date.now() + 10 * 60 * 1000);
+
+    await PasswordResetModel.create({
+      user_id: user.id,
+      code,
+      expires_at,
+    });
+
+    await MailService.sendMail({
+      to: email,
+      subject: "Recuperación de contraseña",
+      text: `Tu código es: ${code}`,
+    });
+  }
+
+  static async verifyCode(code) {
+    return await PasswordResetModel.findValid(code);
+  }
+
+  static async resetPassword({ code, newPassword }) {
+    const record = await PasswordResetModel.findValid(code);
+
+    if (!record) return false;
+
+    const hashed = await bcrypt.hash(newPassword, 10);
+
+    await pool.query(
+      "UPDATE users SET password = ? WHERE id = ?",
+      [hashed, record.user_id]
+    );
+
+    await PasswordResetModel.markUsed(record.id);
+
+    return true;
   }
 }
