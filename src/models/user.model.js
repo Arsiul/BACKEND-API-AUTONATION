@@ -36,4 +36,34 @@ export class UserModel{
         )
         return result;
     }
+    static async update(id, { primer_nombre, segundo_nombre, primer_apellido, segundo_apellido, dni, correo, telefono, url_img, id_estado_usuario, id_rol }) {
+        const [result] = await pool.query(
+            `UPDATE tb_usuario SET
+                primer_nombre = ?,
+                segundo_nombre = ?,
+                primer_apellido = ?,
+                segundo_apellido = ?,
+                dni = ?,
+                correo = ?,
+                telefono = ?,
+                url_img = ?,
+                id_estado_usuario = ?,
+                id_rol = ?
+            WHERE id = ?`,
+            [
+                primer_nombre,
+                segundo_nombre ?? null,
+                primer_apellido,
+                segundo_apellido ?? null,
+                dni,
+                correo,
+                telefono,
+                url_img,
+                id_estado_usuario,
+                id_rol,
+                id
+            ]
+        );
+        return result;
+    }
 }
