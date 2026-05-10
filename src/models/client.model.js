@@ -12,7 +12,7 @@ export class clientModel{
             `INSERT INTO tb_cliente(primer_nombre, segundo_nombre,primer_apellido,segundo_apellido,
             dni,telefono,correo,direccion,url_img) VALUES (?,?,?,?,?,?,?,?,?)`,
             [ data.primer_nombre, data.segundo_nombre ?? null, data.primer_apellido, data.segundo_apellido ?? null,
-            data.dni, data.telefono, data.correo, data.direccion, data.url_img ]
+            data.dni, data.telefono, data.correo, data.direccion, data.url_img ?? null ]
         )
         return newClient;
     }
@@ -22,7 +22,7 @@ export class clientModel{
             `UPDATE tb_cliente SET primer_nombre = ?, segundo_nombre=?, primer_apellido=?, segundo_apellido=?,
             dni=?,telefono=?,correo=?,direccion=?,url_img=? WHERE id = ?`,
             [ data.primer_nombre, data.segundo_nombre ?? null, data.primer_apellido, data.segundo_apellido ?? null,
-            data.dni, data.telefono, data.correo, data.direccion, data.url_img, id ]
+            data.dni, data.telefono, data.correo, data.direccion, data.url_img ?? null, id ]
         )
         return updatedClient;
     }

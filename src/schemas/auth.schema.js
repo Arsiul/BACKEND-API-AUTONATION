@@ -15,7 +15,7 @@ export const clientSchema = z.object({
     .regex(/^[0-9]+$/, "Solo números"),
   correo: z.string().email("Correo inválido"),
   direccion: z.string().min(5, "Dirección muy corta"),
-  url_img: z.string().url("Debe ser una URL válida"),
+  url_img: z.string().url("Debe ser una URL válida").optional(),
 });
 
 export const userSchema = z.object({
