@@ -9,7 +9,7 @@ export const vehicleSchema = z.object({
   transmision: z.enum(["Mecánica", "Automatica"]),
   kilometraje: z.number().nonnegative(),
   nro_puertas: z.number().int().min(2).max(5),
-  url_img: z.string().url("Debe ser una URL de imagen válida"),
+  url_img: z.string().url("Debe ser una URL de imagen válida").nullable(),
   id_estado_vehiculo: z.number().int(),
   id_estado_vehiculo_venta: z.number().int(),
   id_modelo: z.number().int(),
