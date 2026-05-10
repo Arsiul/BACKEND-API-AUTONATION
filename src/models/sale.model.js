@@ -35,7 +35,7 @@ export class SaleModel{
             SET 
                 serie = ?, 
                 nro_comprobante = ?, 
-                fecha_venta = NOW(), 
+                fecha_venta = ?, 
                 subtotal = ?, 
                 igv = ?, 
                 total = ?,
@@ -47,6 +47,7 @@ export class SaleModel{
                 [
                 data.serie,
                 data.nro_comprobante,
+                data.fecha_venta,
                 data.subtotal,
                 data.igv,
                 data.total,
