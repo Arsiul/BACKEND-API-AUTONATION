@@ -6,6 +6,7 @@ import userrouter from "./src/routes/user.route.js";
 import saleRouter from "./src/routes/sale.route.js";
 import vehicleroute from "./src/routes/vehicle.route.js";
 import buyRouter from "./src/routes/buy.route.js";
+import providerRoute from "./src/routes/provider.route.js";
 
 const app = express()
 app.use(cors());
@@ -17,5 +18,6 @@ app.use("/api/user", authrouter)
 app.use("/api/sale", saleRouter)
 app.use("/api/vehicles", vehicleroute)
 app.use("/api/buy", buyRouter)
+app.use("/api/provider", providerRoute)
 
 export default app;
