@@ -7,6 +7,6 @@ const saleRouter = Router();
 
 saleRouter.get("/getAll", authMiddleware, roleMiddleware(1,2), SaleController.getAll)
 saleRouter.post("/register", authMiddleware, roleMiddleware(1,2), SaleController.create);
-saleRouter.put("/update", authMiddleware, roleMiddleware(1,2), SaleController.update);
+saleRouter.put("/update/:id", authMiddleware, roleMiddleware(1,2), SaleController.update);
 
 export default saleRouter;
