@@ -29,4 +29,35 @@ export class SaleModel{
         );
     }
 
+    static async update(data,id){
+            const updateSale = await pool.query(
+            `UPDATE tb_venta 
+            SET 
+                serie = ?, 
+                nro_comprobante = ?, 
+                fecha_venta = NOW(), 
+                subtotal = ?, 
+                igv = ?, 
+                total = ?,
+                id_estado_pago = ?, 
+                id_cliente = ?, 
+                id_tipo_comprobante = ?, 
+                id_usuario = ?
+            WHERE id = ?`
+                [
+                data.serie,
+                data.nro_comprobante,
+                data.subtotal,
+                data.igv,
+                data.total,
+                data.id_estado_pago,
+                data.id_cliente,
+                data.id_tipo_comprobante,
+                data.id_usuario,
+                id
+                ]
+            )
+            return updateSale;
+    }
+
 }
