@@ -33,5 +33,11 @@ export class clientModel{
         )
         return result[0]
     }
+    static async findByCorreo(correo){
+        const [result] = await pool.query(
+            `SELECT * FROM tb_cliente WHERE correo = ?`,[correo]
+        )
+        return result[0]
+    }
     
 }

@@ -26,10 +26,16 @@ export class clientController{
         
         try {
             const existdni = await clientModel.findByDni(data.dni)
+            const existcorreo = await clientModel.findByCorreo(data.correo)
             if (existdni){
                 return res.status(409).json({
                     message: "DNI ya registrado"
                 })
+            }
+            if(existcorreo){
+                return res.status(409).json({
+                    message: "Correo ya registrado"
+            })
             }
             const newClient = await clientModel.Create(data)
             res.status(201).json({
