@@ -31,7 +31,7 @@ export class ProviderModel{
         }
     static async findByCorreo(correo){
             const [result] = await pool.query(
-                `SELECT * FROM tb_proveedor WHERE correo = ?`,[correo]
+                `SELECT * FROM tb_proveedor WHERE email = ?`,[correo]
             )
             return result[0]
         }
