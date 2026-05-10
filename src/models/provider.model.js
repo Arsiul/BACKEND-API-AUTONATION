@@ -18,7 +18,7 @@ export class ProviderModel{
             const updateProvider = await pool.query(
                 `UPDATE tb_proveedor SET razon_social = ?, ruc=?, telefono=?, email=?,
                 direccion=?,id_estado=? WHERE id = ?`,
-                [ data.razon_social, data.ruc, data.telefono, data.email , data.direccion, data.id_estado]
+                [ data.razon_social, data.ruc, data.telefono, data.email , data.direccion, data.id_estado, id]
             )
             return updateProvider;
         }

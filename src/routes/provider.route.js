@@ -7,6 +7,6 @@ const providerRoute = Router()
 
 providerRoute.get("/getAll", authMiddleware, roleMiddleware(1), ProviderController.getAll)
 providerRoute.post("/register", authMiddleware, roleMiddleware(1), ProviderController.Register)
-providerRoute.put("/update", authMiddleware, roleMiddleware(1), ProviderController.Update)
+providerRoute.put("/update/:id", authMiddleware, roleMiddleware(1), ProviderController.Update)
 
 export default providerRoute;
