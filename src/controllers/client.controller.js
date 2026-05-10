@@ -23,8 +23,14 @@ export class clientController{
     static async Register(req,res){
 
         const data = req.body
-
+        
         try {
+            const existdni = await clientModel.findByDni(data.dni)
+            if (existdni){
+                return res.status(409).json({
+                    message: "DNI ya registrado"
+                })
+            }
             const newClient = await clientModel.Create(data)
             res.status(201).json({
                 message: "Cliente Registrado"

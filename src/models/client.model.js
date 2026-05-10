@@ -27,4 +27,11 @@ export class clientModel{
         return updatedClient;
     }
     
+    static async findByDni(dni){
+        const [result] = await pool.query(
+            `SELECT * FROM tb_cliente WHERE dni = ?`,[dni]
+        )
+        return result[0]
+    }
+    
 }
