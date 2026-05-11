@@ -4,7 +4,11 @@ export class SaleModel{
 
     static async getAll(){
         const [result] = await pool.query(
-            `SELECT * FROM tb_venta`
+            `SELECT tb1.id,tb1.serie,tb1.nro_comprobante,tb1.fecha_venta,tb1.subtotal,tb1.igv,tb1.total,tb1.id_estado_pago,tb1.id_cliente,tb1.id_tipo_comprobante,tb1.id_usuario, tb2.id_vehiculo,
+tb3.anio, tb3.precio_u, tb3.url_img 
+FROM tb_venta tb1
+INNER JOIN tb_detalle_venta tb2 ON (tb1.id = tb2.id_venta)
+INNER JOIN tb_vehiculo tb3 ON (tb2.id_vehiculo = tb3.id) ORDER BY nro_comprobante DESC;`
         )
         return result;
     }
