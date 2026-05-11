@@ -24,10 +24,7 @@ static async getAll(){
         ORDER BY tb1.nro_comprobante DESC;
     `)
 
-    return result.map(row => ({
-        ...row,
-        vehiculos: JSON.parse(row.vehiculos)
-    }))
+    return result
 }
     static async createSale(conn, data) {
         await conn.query(
