@@ -7,7 +7,7 @@ export class MailService {
     try {
       const data = await resend.emails.send({
   from: "onboarding@resend.dev",
-  to: "report0361@gmail.com",
+  to: "testinggcard001@gmail.com",
   subject,
   text,
 });
