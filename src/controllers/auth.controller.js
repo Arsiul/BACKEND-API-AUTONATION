@@ -1,5 +1,6 @@
 import { AuthService } from "../services/auth.service.js";
 import { generateToken } from "../utils/jwt.util.js";
+import { UserModel } from "../models/user.model.js";
 
 export class AuthController {
 
@@ -32,20 +33,27 @@ export class AuthController {
   }
   }
 
-    static async forgotPassword(req, res) {
-    try {
-      const { email } = req.body;
+  static async forgotPassword(req, res) {
+  try {
+    const { email } = req.body;
 
-      await AuthService.requestPasswordReset(email);
+    const user = await UserModel.findByEmail(email);
 
-      return res.json({
-        message: "Si el correo existe, se enviará un código"
+    if (!user) {
+      return res.status(404).json({
+        message: "Correo No Registrado"
       });
-
-    } catch (err) {
-      return res.status(500).json({ error: err.message });
     }
+    await AuthService.requestPasswordReset(user);
+
+    return res.json({
+      message: "Se envió un código al correo"
+    });
+
+  } catch (err) {
+    return res.status(500).json({ error: err.message });
   }
+}
 
   static async verifyCode(req, res) {
     try {

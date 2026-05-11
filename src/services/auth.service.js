@@ -40,29 +40,24 @@ export class AuthService {
     };
   }
 
-  static async requestPasswordReset(email) {
-    const [rows] = await pool.query(
-      "SELECT * FROM tb_usuario WHERE correo = ?",
-      [email]
-    );
+  static async requestPasswordReset(user) {
+    const code = Math.floor(100000 + Math.random() * 900000);
 
-    const user = rows[0];
-    if (!user) return;
-
-    const code = CodeUtil.generate();
-    const expires_at = new Date(Date.now() + 10 * 60 * 1000);
-
+    // guardar en BD (tu lógica ya la tienes)
     await PasswordResetModel.create({
       user_id: user.id,
       code,
-      expires_at,
+      expires_at: new Date(Date.now() + 10 * 60 * 1000),
     });
 
+    // enviar correo
     await MailService.sendMail({
-      to: email,
-      subject: "Recuperación de contraseña",
+      to: user.correo,
+      subject: "Reset Password",
       text: `Tu código es: ${code}`,
     });
+
+    return true;
   }
 
   static async verifyCode(code) {
@@ -77,7 +72,7 @@ export class AuthService {
     const hashed = await bcrypt.hash(newPassword, 10);
 
     await pool.query(
-      "UPDATE users SET password = ? WHERE id = ?",
+      "UPDATE tb_usuario SET contrasena = ? WHERE id = ?",
       [hashed, record.user_id]
     );
 

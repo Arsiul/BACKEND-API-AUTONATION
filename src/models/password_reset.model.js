@@ -13,7 +13,7 @@ export class PasswordResetModel {
   static async findValid(code) {
     const [rows] = await pool.query(
       `SELECT * FROM tb_password_reset
-       WHERE code = ? AND used = 0 AND expires_at > NOW()`,
+       WHERE code = ? AND used = 0 AND expires_at > DATE_SUB(UTC_TIMESTAMP(), INTERVAL 5 HOUR)`,
       [code]
     );
 
@@ -22,7 +22,7 @@ export class PasswordResetModel {
 
   static async markUsed(id) {
     await pool.query(
-      `UPDATE password_reset SET used = 1 WHERE id = ?`,
+      `UPDATE tb_password_reset SET used = 1 WHERE id = ?`,
       [id]
     );
   }
