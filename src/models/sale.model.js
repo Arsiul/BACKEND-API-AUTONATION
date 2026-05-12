@@ -2,7 +2,7 @@ import { pool } from "../config/db.js"
 
 export class SaleModel{
 
-static async getAll(){
+    static async getAll(){
     const [result] = await pool.query(`
         SELECT tb1.id,tb1.serie,tb1.nro_comprobante,tb1.fecha_venta,
         tb1.subtotal,tb1.igv,tb1.total,tb1.id_estado_pago,
@@ -25,7 +25,31 @@ static async getAll(){
     `)
 
     return result
-}
+    }
+    static async getAllByUser(id){
+        const [result] = await pool.query(`
+            SELECT tb1.id,tb1.serie,tb1.nro_comprobante,tb1.fecha_venta,
+            tb1.subtotal,tb1.igv,tb1.total,tb1.id_estado_pago,
+            tb1.id_cliente,tb1.id_tipo_comprobante,tb1.id_usuario,
+            JSON_ARRAYAGG(
+                JSON_OBJECT(
+                    'id_vehiculo',tb3.id,
+                    'anio',tb3.anio,
+                    'precio_u',tb3.precio_u,
+                    'url_img',tb3.url_img
+                )
+            ) AS vehiculos
+            FROM tb_venta tb1
+            INNER JOIN tb_detalle_venta tb2 ON tb1.id = tb2.id_venta
+            INNER JOIN tb_vehiculo tb3 ON tb2.id_vehiculo = tb3.id WHERE tb1.id_usuario = ? 
+            GROUP BY tb1.id,tb1.serie,tb1.nro_comprobante,tb1.fecha_venta,
+            tb1.subtotal,tb1.igv,tb1.total,tb1.id_estado_pago,
+            tb1.id_cliente,tb1.id_tipo_comprobante,tb1.id_usuario
+            ORDER BY tb1.nro_comprobante DESC;
+        `, [id])
+
+        return result
+    }
     static async createSale(conn, data) {
         await conn.query(
         `INSERT INTO tb_venta 
