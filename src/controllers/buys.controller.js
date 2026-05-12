@@ -66,10 +66,8 @@ export class BuyController{
             try {
                 const id = req.params.id;
     
-                const deleted = await BuyModel.findById(id);
-                return res.status(200).json({
-                    message: "Registro"
-                })
+                const data = await BuyModel.findById(id);
+                return res.status(200).json(data)
     
             } catch (error) {
                 return res.status(500).json({
