@@ -94,9 +94,9 @@ export class SaleModel{
                 data.igv,
                 data.total,
                 data.id_estado_pago,
-                data.id_cliente ?? 1,
+                data.id_cliente ?? "15497944-483f-11f1-9882-a2aa326f9672",
                 data.id_tipo_comprobante,
-                data.id_usuario,
+                data.id_usuario ?? "597d5cce-4c24-11f1-9882-a2aa326f9672",
                 id
                 ]
             )
