@@ -36,4 +36,17 @@ export class BuyModel{
         );
         return result;
     }
+    static async deleteBuy(id){
+        const [result] = await pool.query(
+            `DELETE FROM tb_compra WHERE id = ?`, [id]
+        )
+
+        return result;
+    }
+    static async findById(id){
+        const [result] = await pool.query(
+            `SELECT * FROM tv_compra WHERE id = ?`,[id]
+        )
+        return result[0]
+    }
 }

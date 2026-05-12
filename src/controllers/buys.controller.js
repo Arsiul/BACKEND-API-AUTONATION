@@ -39,4 +39,43 @@ export class BuyController{
             res.status(500).json({ message: "Error al actualizar", error: error.message });
         }
     }
+    static async Delete(req, res) {
+            try {
+                const id = req.params.id;
+    
+                const deleted = await BuyModel.deleteBuy(id);
+    
+                if (deleted.affectedRows === 0) {
+                    return res.status(404).json({
+                        message: "Compra no encontrado"
+                    });
+                }
+    
+                return res.status(200).json({
+                    message: "Compra eliminada"
+                });
+    
+            } catch (error) {
+                return res.status(500).json({
+                    message: "Error Interno",
+                    error: error.message
+                });
+            }
+        }
+    static async findById(req, res) {
+            try {
+                const id = req.params.id;
+    
+                const deleted = await BuyModel.findById(id);
+                return res.status(200).json({
+                    message: "Registro"
+                })
+    
+            } catch (error) {
+                return res.status(500).json({
+                    message: "Error Interno",
+                    error: error.message
+                });
+            }
+        }
 }

@@ -8,5 +8,7 @@ const buyRouter = Router();
 buyRouter.get("/getAll", BuyController.getAll)
 buyRouter.post("/register", authMiddleware, roleMiddleware(1), BuyController.create);
 buyRouter.put("/update/:id", authMiddleware, roleMiddleware(1), BuyController.update);
+buyRouter.delete("/delete/:id", authMiddleware, roleMiddleware(1), BuyController.delete);
+buyRouter.get("/getById/:id", authMiddleware, roleMiddleware(1), BuyController.findById);
 
 export default buyRouter;
