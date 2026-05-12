@@ -33,7 +33,7 @@ export class BuyController{
         try {
             const { id } = req.params;
             const result = await BuyModel.update(id, req.body);
-            if (result.affectedRows === 0) return res.status(404).json({ message: "Compra no encontrada" });
+            if (result.changedRows === 0) return res.status(404).json({ message: "Compra no encontrada" });
             res.status(200).json({ message: "Compra actualizada correctamente" });
         } catch (error) {
             res.status(500).json({ message: "Error al actualizar", error: error.message });
