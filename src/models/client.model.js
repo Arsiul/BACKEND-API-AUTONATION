@@ -39,5 +39,11 @@ export class clientModel{
         )
         return result[0]
     }
-    
+    static async deleteClient(id){
+        const [result] = await pool.query(
+            `DELETE FROM tb_cliente WHERE id = ?`, [id]
+        )
+
+        return result;
+    }
 }

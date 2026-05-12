@@ -64,4 +64,27 @@ export class clientController{
             })
         }
     }
+    static async Delete(req, res) {
+        try {
+            const id = req.params.id;
+
+            const deleted = await clientModel.deleteClient(id);
+
+            if (deleted.affectedRows === 0) {
+                return res.status(404).json({
+                    message: "Cliente no encontrado"
+                });
+            }
+
+            return res.status(200).json({
+                message: "Cliente eliminado"
+            });
+
+        } catch (error) {
+            return res.status(500).json({
+                message: "Error Interno",
+                error: error.message
+            });
+        }
+    }
 }
