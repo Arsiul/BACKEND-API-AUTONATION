@@ -39,7 +39,7 @@ export class BuyController{
             res.status(500).json({ message: "Error al actualizar", error: error.message });
         }
     }
-    static async Delete(req, res) {
+    static async delete(req, res) {
             try {
                 const id = req.params.id;
     
