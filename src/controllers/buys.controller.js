@@ -29,14 +29,21 @@ export class BuyController{
         }
     }
 
-    static async update(req, res) {
+    static async Update(req,res){
+        const id = req.params.id
+        const data = req.body
+
         try {
-            const { id } = req.params;
-            const result = await BuyModel.update(id, req.body);
-            if (result.changedRows === 0) return res.status(404).json({ message: "Compra no encontrada" });
-            res.status(200).json({ message: "Compra actualizada correctamente" });
+            const updatebuy = await BuyModel.update(data,id)
+            console.log(data)
+            res.status(200).json({
+                message: "compra Actualizado"
+            })
+
         } catch (error) {
-            res.status(500).json({ message: "Error al actualizar", error: error.message });
+            res.status(500).json({
+                error: error.message
+            })
         }
     }
     static async delete(req, res) {
