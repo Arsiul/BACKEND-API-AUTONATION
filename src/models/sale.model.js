@@ -82,7 +82,7 @@ export class SaleModel{
                 igv = ?, 
                 total = ?,
                 id_estado_pago = ?, 
-                id_cliente = ?, 
+                id_cliente = ? , 
                 id_tipo_comprobante = ?, 
                 id_usuario = ?
             WHERE id = ?`, 
@@ -94,7 +94,7 @@ export class SaleModel{
                 data.igv,
                 data.total,
                 data.id_estado_pago,
-                data.id_cliente,
+                data.id_cliente ?? 1,
                 data.id_tipo_comprobante,
                 data.id_usuario,
                 id
