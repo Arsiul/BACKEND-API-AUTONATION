@@ -6,6 +6,7 @@ import { BuyController } from "../controllers/buys.controller.js";
 const buyRouter = Router();
 
 buyRouter.get("/getAll", BuyController.getAll)
-// buyRouter.post("/register", SaleController.create);
+buyRouter.post("/register", authMiddleware, roleMiddleware(1), BuyController.create);
+buyRouter.put("/update/:id", authMiddleware, roleMiddleware(1), BuyController.update);
 
 export default buyRouter;
