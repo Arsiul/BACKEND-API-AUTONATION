@@ -29,13 +29,14 @@ export class BuyController{
         }
     }
 
-    static async Update(req,res){
+    static async update(req,res){
         const id = req.params.id
         const data = req.body
 
         try {
             const updatebuy = await BuyModel.update(data,id)
             console.log(data)
+            console.log(id)
             res.status(200).json({
                 message: "compra Actualizado"
             })
