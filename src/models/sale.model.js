@@ -103,4 +103,11 @@ export class SaleModel{
             return updateSale;
     }
 
+    static async findById(id){
+        const [result] = await pool.query(
+            `SELECT * FROM tb_venta WHERE id = ?`,[id]
+        )
+        return result[0]
+    }
+
 }

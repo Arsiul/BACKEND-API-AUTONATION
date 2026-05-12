@@ -70,4 +70,18 @@ export class SaleController{
             res.status(500).json({ message: "Error al actualizar venta", error: error.message });
         }
     }
+    static async findById(req, res) {
+                try {
+                    const id = req.params.id;
+        
+                    const data = await SaleModel.findById(id);
+                    return res.status(200).json(data)
+        
+                } catch (error) {
+                    return res.status(500).json({
+                        message: "Error Interno",
+                        error: error.message
+                    });
+                }
+            }
 }
